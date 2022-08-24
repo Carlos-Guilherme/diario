@@ -1,0 +1,28 @@
+import PySimpleGUI as sg
+import os
+
+def main():
+    sg.theme('Reddit')
+    
+    result = [
+        [sg.Text('Nome do Arquivo: '), sg.Input(key="nome_arquivo", size=30), sg.Button("SALVAR", size=10)],
+        [sg.Multiline(size=(80, 20), key="multiline")]
+    ]
+
+    layout = [
+        [sg.Frame('', layout = result)],
+    ]
+    return sg.Window('Diário', layout = layout, finalize = True)
+janela = main()
+
+while True:
+    eventos, valores = janela.read()
+    if eventos == sg.WINDOW_CLOSED:
+        break
+    elif eventos == "SALVAR":
+        nome_arquivo = valores["nome_arquivo"]
+        texto_escrito = valores["multiline"]
+        # cria o arquivo de texto com o nome solicitado
+        arquivo = open(nome_arquivo+'.txt', "w") #cria ou abre o arquivo
+        arquivo.write(texto_escrito) # escreve
+        arquivo = open(nome_arquivo+'.txt', "w")
